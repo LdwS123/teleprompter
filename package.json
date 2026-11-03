@@ -1,0 +1,8 @@
+{
+  "name": "teleprompter",
+  "version": "1.0.0",
+  "description": "Free, private, offline teleprompter with wpm-based scrolling, mirror mode and camera recording.",
+  "private": true,
+  "scripts": { "test": "node --test tests/core.test.js" },
+  "license": "MIT"
+}

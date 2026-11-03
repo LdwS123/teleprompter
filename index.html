@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Téléprompteur — free, offline, with camera recording</title>
+  <meta name="description" content="A free, private teleprompter that runs in your browser: words-per-minute scrolling, mirror mode for glass rigs, camera preview and recording. Nothing is uploaded.">
+  <meta name="theme-color" content="#0B0D1E">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="editor">
+  <header class="top">
+    <img src="logo.svg" alt="" width="44" height="44">
+    <div>
+      <h1 data-i18n="title">Téléprompteur</h1>
+      <p class="tag" data-i18n="tagline">Gratuit, privé, fonctionne hors ligne. Rien ne quitte ton navigateur.</p>
+    </div>
+    <button id="lang" class="ghost" aria-label="Language">EN</button>
+  </header>
+
+  <main class="grid">
+    <section class="card script">
+      <div class="row between">
+        <label for="script" data-i18n="yourScript">Ton script</label>
+        <span id="stats" class="muted"></span>
+      </div>
+      <textarea id="script" spellcheck="true" data-i18n-ph="placeholder"></textarea>
+      <p class="hint" data-i18n="syntax"></p>
+      <div class="row wrap">
+        <button id="sample" class="ghost" data-i18n="sample">Exemple</button>
+        <label class="ghost btn" data-i18n="import">Importer .txt<input id="file" type="file" accept=".txt,.md,text/plain" hidden></label>
+        <button id="export" class="ghost" data-i18n="export">Exporter</button>
+        <button id="clear" class="ghost danger" data-i18n="clear">Effacer</button>
+      </div>
+    </section>
+
+    <section class="card settings">
+      <h2 data-i18n="settings">Réglages</h2>
+
+      <div class="field"><label for="wpm"><span data-i18n="speed">Vitesse de lecture</span> <b id="wpmV"></b></label>
+        <input id="wpm" type="range" min="60" max="260" step="5"></div>
+
+      <div class="field"><label for="size"><span data-i18n="size">Taille du texte</span> <b id="sizeV"></b></label>
+        <input id="size" type="range" min="28" max="180" step="2"></div>
+
+      <div class="field"><label for="width"><span data-i18n="width">Largeur du texte</span> <b id="widthV"></b></label>
+        <input id="width" type="range" min="40" max="100" step="2"></div>
+
+      <div class="field"><label for="lh"><span data-i18n="lh">Interligne</span> <b id="lhV"></b></label>
+        <input id="lh" type="range" min="1" max="2" step="0.05"></div>
+
+      <div class="field"><label for="countdown"><span data-i18n="countdown">Compte à rebours</span> <b id="countdownV"></b></label>
+        <input id="countdown" type="range" min="0" max="10" step="1"></div>
+
+      <div class="field seg" role="group" aria-label="align">
+        <button data-align="left" class="ghost" data-i18n="left">Gauche</button>
+        <button data-align="center" class="ghost" data-i18n="center">Centre</button>
+      </div>
+
+      <label class="check"><input id="mirror" type="checkbox"> <span data-i18n="mirror">Miroir (pour vitre / beam-splitter)</span></label>
+      <label class="check"><input id="band" type="checkbox"> <span data-i18n="band">Ligne de lecture</span></label>
+      <label class="check"><input id="camera" type="checkbox"> <span data-i18n="camera">Aperçu caméra en fond</span></label>
+      <label class="check"><input id="record" type="checkbox"> <span data-i18n="record">Enregistrer la vidéo pendant la lecture</span></label>
+
+      <button id="start" class="primary" data-i18n="start">Lancer le téléprompteur</button>
+      <p class="hint kbd" data-i18n="keys"></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span data-i18n="privacy">100% local : ton script et ta vidéo ne sont jamais envoyés.</span>
+    · <a href="https://github.com/LdwS123/teleprompter">GitHub</a> · MIT
+  </footer>
+</div>
+
+<div id="prompter" hidden>
+  <video id="cam" muted playsinline></video>
+  <div id="stage"><div id="track"></div></div>
+  <div id="band-line"></div>
+  <div id="progress"><i></i></div>
+  <div id="count" aria-live="assertive"></div>
+  <div id="rec" hidden><i></i> REC <span id="recT">0:00</span></div>
+  <div id="hud">
+    <button id="hRestart" title="R">⏮</button>
+    <button id="hPlay" class="big" title="Space">▶</button>
+    <button id="hSlow" title="↓">−</button>
+    <span id="hWpm"></span>
+    <button id="hFast" title="↑">+</button>
+    <span class="sep"></span>
+    <button id="hSmall" title="-">A−</button>
+    <button id="hBig" title="+">A+</button>
+    <button id="hMirror" title="M">⇋</button>
+    <span class="sep"></span>
+    <button id="hClose" title="Esc">✕</button>
+  </div>
+</div>
+
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
