@@ -5,7 +5,7 @@
 <p align="center">
   <b>A free, private teleprompter that runs in your browser.</b><br>
   Words-per-minute scrolling · mirror mode for glass rigs · camera preview and recording · FR / EN<br>
-  Nothing is uploaded. No account. Works offline.
+  Optional voice following · nothing uploaded by default · no account · works offline
 </p>
 
 <p align="center">
@@ -24,6 +24,9 @@ paste a script, press play, read to camera, and (optionally) record the take rig
 
 - **Real reading speed.** You set *words per minute*, not an abstract slider. The scroll speed is derived from your
   text, so a 150 wpm script really takes the time the counter shows.
+- **Follow my voice** (optional). The text advances when *you* read: spoken words are matched against the script, with
+  tolerance for accents, small recognition errors and skipped words. Words you've read dim, the next one is highlighted.
+  Pause and it waits; scroll by hand and it re-syncs. Needs a browser with speech recognition (Chrome, Edge, Safari).
 - **Reading line** at 38% of the screen, with fade-out top and bottom, so your eyes stay near the lens.
 - **Mirror mode** for beam-splitter glass rigs.
 - **Camera preview + recording** (video and mic), saved as MP4/WebM when the script ends. The recording is *not* mirrored
@@ -64,7 +67,9 @@ Layout: `core.js` (pure logic: parsing, word count, wpm to px/s), `app.js` (UI),
 
 ## Privacy
 
-Everything runs locally. The page makes no network requests besides loading its own files.
+Everything runs locally and the page makes no network requests besides loading its own files, **except** if you turn on
+*Follow my voice*: the browser's speech recognition is what listens, and Chrome sends that audio to Google's servers.
+The option is off by default and explained next to the checkbox. Your script and any recorded video are never uploaded.
 
 ## License
 

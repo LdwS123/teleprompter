@@ -65,4 +65,15 @@ button:hover,.btn:hover{border-color:var(--a)}
 #hud .sep{width:1px;height:26px;background:#ffffff22}
 #hWpm{min-width:78px;text-align:center;font-variant-numeric:tabular-nums;font-size:14px;color:#cfd3ff}
 #prompter.nocursor{cursor:none}
+select{width:100%;margin-top:6px;background:#0a0c1f;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:15px}
+.field.sub{margin:-2px 0 14px 28px}.field.sub[hidden]{display:none}
+#track .w{transition:opacity .25s,color .25s}
+#prompter.voice #track .w.said{opacity:.32}
+#prompter.voice #track .w.cur{color:#34E0C4}
+#heard{position:absolute;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:86vw;display:none;gap:8px;align-items:center;
+  padding:6px 14px;border-radius:99px;background:#0b0d1ecc;border:1px solid #ffffff22;color:#cfd3ff;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .4s}
+#prompter.voice #heard{display:flex}
+#heard.hide{opacity:0}
+#hMic{font-weight:400;opacity:.5}#hMic.live{opacity:1;animation:pulse 1.2s infinite}
+#prompter.voice #hSlow,#prompter.voice #hFast,#prompter.voice #hWpm{display:none}
 @media(prefers-reduced-motion:reduce){#rec i{animation:none}}

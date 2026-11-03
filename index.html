@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Téléprompteur — free, offline, with camera recording</title>
-  <meta name="description" content="A free, private teleprompter that runs in your browser: words-per-minute scrolling, mirror mode for glass rigs, camera preview and recording. Nothing is uploaded.">
+  <meta name="description" content="A free, private teleprompter that runs in your browser: words-per-minute scrolling, mirror mode for glass rigs, camera preview and recording. Nothing is uploaded (unless you turn on voice following in Chrome).">
   <meta name="theme-color" content="#0B0D1E">
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
@@ -64,6 +64,18 @@
       <label class="check"><input id="camera" type="checkbox"> <span data-i18n="camera">Aperçu caméra en fond</span></label>
       <label class="check"><input id="record" type="checkbox"> <span data-i18n="record">Enregistrer la vidéo pendant la lecture</span></label>
 
+      <label class="check"><input id="voice" type="checkbox"> <span data-i18n="voice">Suivre ma voix</span></label>
+      <div class="field sub" id="voiceOpts">
+        <label for="vlang" data-i18n="vlang">Langue parlée</label>
+        <select id="vlang">
+          <option value="auto" data-i18n="vauto">Auto (selon le script)</option>
+          <option value="en-US">English (US)</option>
+          <option value="en-GB">English (UK)</option>
+          <option value="fr-FR">Français</option>
+        </select>
+        <p class="hint" data-i18n="voiceNote"></p>
+      </div>
+
       <button id="start" class="primary" data-i18n="start">Lancer le téléprompteur</button>
       <p class="hint kbd" data-i18n="keys"></p>
     </section>
@@ -82,6 +94,7 @@
   <div id="progress"><i></i></div>
   <div id="count" aria-live="assertive"></div>
   <div id="rec" hidden><i></i> REC <span id="recT">0:00</span></div>
+  <div id="heard" aria-live="off"><b id="hMic">🎤</b> <span id="hHeard"></span></div>
   <div id="hud">
     <button id="hRestart" title="R">⏮</button>
     <button id="hPlay" class="big" title="Space">▶</button>
