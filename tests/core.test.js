@@ -34,17 +34,6 @@ test("advance tolerates a missed word using the aligned tail", () => {
   assert.equal(advance(SW, 4, ["i", "love", "sales"]), 8);
 });
 
-test("emotionFor resolves cues in both languages and ignores unknown tags", () => {
-  const { emotionFor, EMOTIONS } = require("../core.js");
-  assert.equal(emotionFor("Smile").emoji, "😊");
-  assert.equal(emotionFor("sourire").emoji, "😊");
-  assert.equal(emotionFor("sérieux").emoji, "😐");
-  assert.equal(emotionFor("excited").emoji, "🔥");
-  assert.equal(emotionFor("whatever"), null);
-  assert.equal(emotionFor(""), null);
-  assert.equal(new Set(EMOTIONS.map((e) => e.emoji)).size, EMOTIONS.length);
-});
-
 test("guessLang", () => {
   assert.equal(guessLang("I love the way you are building this for the team"), "en");
   assert.equal(guessLang("Je suis dans une équipe qui est pour les clients"), "fr");

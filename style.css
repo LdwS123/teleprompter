@@ -64,11 +64,6 @@ button:hover,.btn:hover{border-color:var(--a)}
 #hud button.big{min-width:56px;height:48px;background:linear-gradient(135deg,var(--a),var(--b));color:#06101a;font-weight:800}
 #hud .sep{width:1px;height:26px;background:#ffffff22}
 #hWpm{min-width:78px;text-align:center;font-variant-numeric:tabular-nums;font-size:14px;color:#cfd3ff}
-.emobar{margin-top:10px}#emo{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-#emo button{padding:6px 10px;font-size:15px;border-radius:99px;background:#0a0c1f}
-#emo button small{font-size:12px;color:var(--muted);margin-left:4px}
-#track .cue.emo{display:inline-block;font-size:.55em;padding:.1em .5em;border-radius:.7em;border-color:#ffd16655;background:#ffd16614;color:#ffe6a3;vertical-align:.18em}
-#track .cue.emo i{font-style:normal;font-size:1.7em;line-height:1;vertical-align:-.12em}
 #prompter.nocursor{cursor:none}
 select{width:100%;margin-top:6px;background:#0a0c1f;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:15px}
 .field.sub{margin:-2px 0 14px 28px}.field.sub[hidden]{display:none}

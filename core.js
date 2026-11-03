@@ -107,31 +107,7 @@
     return fr > en * 1.2 ? "fr" : en > fr * 1.2 ? "en" : null;
   }
 
-  /* ---------- delivery cues: [smile], [passion], [pause]... shown as big emoji ---------- */
-  const EMOTIONS = [
-    { emoji: "😊", en: "smile", fr: "sourire" },
-    { emoji: "🔥", en: "passion", fr: "passion", alias: ["excited", "enthousiaste", "energy", "energie"] },
-    { emoji: "😌", en: "calm", fr: "calme" },
-    { emoji: "💪", en: "emphasis", fr: "insiste", alias: ["insist", "stress", "emphase"] },
-    { emoji: "😮", en: "surprise", fr: "surprise" },
-    { emoji: "😄", en: "laugh", fr: "rire" },
-    { emoji: "😐", en: "serious", fr: "serieux" },
-    { emoji: "😔", en: "sad", fr: "triste" },
-    { emoji: "🐢", en: "slow", fr: "lent", alias: ["ralentis"] },
-    { emoji: "⚡", en: "fast", fr: "rapide", alias: ["accelere"] },
-    { emoji: "⏸", en: "pause", fr: "pause", alias: ["silence", "beat"] },
-    { emoji: "🌬️", en: "breathe", fr: "respire", alias: ["breath", "respiration"] },
-    { emoji: "👀", en: "eyes", fr: "regard", alias: ["look", "eyecontact", "camera"] },
-  ];
-
-  /** Emotion entry for a cue tag ("Smile", "sourire"...), or null for an unknown tag. */
-  function emotionFor(tag) {
-    const k = normWord(tag);
-    if (!k) return null;
-    return EMOTIONS.find((e) => k === normWord(e.en) || k === normWord(e.fr) || (e.alias || []).includes(k)) || null;
-  }
-
-  const api = { parseScript, countWords, durationSeconds, formatTime, pixelsPerSecond, clamp, normWord, wordsMatch, advance, guessLang, EMOTIONS, emotionFor };
+  const api = { parseScript, countWords, durationSeconds, formatTime, pixelsPerSecond, clamp, normWord, wordsMatch, advance, guessLang };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.TPCore = api;
 })(typeof globalThis !== "undefined" ? globalThis : this);

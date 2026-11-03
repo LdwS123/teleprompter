@@ -31,8 +31,7 @@ paste a script, press play, read to camera, and (optionally) record the take rig
 - **Mirror mode** for beam-splitter glass rigs.
 - **Camera preview + recording** (video and mic), saved as MP4/WebM when the script ends. The recording is *not* mirrored
   and never contains the prompter text.
-- **Director notes**: a line starting with `//` shows small and is never counted.
-- **Emotion cues**: `[smile]`, `[passion]`, `[emphasis]`, `[calm]`, `[eyes]`, `[pause]`... show as big emoji badges in the text (EN or FR tags, one-click insert buttons in the editor), so you remember *how* to say each line, not just what to say.
+- **Director notes**: a line starting with `//` shows small and is never counted. `[pause]`, `[smile]`... become coloured cues.
 - **Countdown**, progress bar, auto-hiding controls, screen wake-lock, fullscreen.
 - **Phone friendly**: tap to play/pause, drag to scroll by hand.
 - Script and settings are saved in your browser (`localStorage`). Import / export `.txt`.
