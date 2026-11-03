@@ -179,12 +179,20 @@
   function startWithCountdown() {
     if (S.countdown <= 0 || pos > 0) return play();
     let n = S.countdown; counting = true; setPlayIcon();
-    const c = $("#count"); c.classList.add("on"); c.textContent = n;
-    countTimer = setInterval(() => { n--; if (n <= 0) { cancelCountdown(); play(); } else c.textContent = n; }, 1000);
+    const c = $("#count"); c.classList.add("on"); c.textContent = n; sayNumber(n);
+    countTimer = setInterval(() => { n--; if (n <= 0) { cancelCountdown(); play(); } else { c.textContent = n; sayNumber(n); } }, 1000);
   }
-  function cancelCountdown() { clearInterval(countTimer); counting = false; $("#count").classList.remove("on"); setPlayIcon(); }
+  function cancelCountdown() { clearInterval(countTimer); counting = false; $("#count").classList.remove("on"); try { speechSynthesis.cancel(); } catch (_) {} setPlayIcon(); }
+  function sayNumber(n) {                                // the little voice: "3, 2, 1". Skipped while recording so it stays out of the video.
+    if (S.record || !window.speechSynthesis) return;
+    try {
+      const u = new SpeechSynthesisUtterance(String(n));
+      u.lang = voiceLang(); u.rate = 1.1; u.volume = 0.8;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    } catch (_) {}
+  }
 
-  function restart() { cancelCountdown(); pause(); pos = target = 0; wp = 0; markAll(); render(); }
+  function restart() { cancelCountdown(); pause(); pos = target = 0; wp = 0; markAll(); render(); startWithCountdown(); }   // every restart gets the 3-2-1 again
   function setWpm(d) { S.wpm = clamp(S.wpm + d, 60, 260); save(); syncControls(); layout(); }
   function setSize(d) {
     S.size = clamp(S.size + d, 28, 180); save(); syncControls();

@@ -52,7 +52,7 @@ button:hover,.btn:hover{border-color:var(--a)}
 #band-line.off{display:none}
 #progress{position:absolute;left:0;right:0;top:0;height:4px;background:#ffffff14}
 #progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b))}
-#count{position:absolute;inset:0;display:none;place-items:center;font-size:clamp(120px,32vw,360px);font-weight:800;color:#fff;background:#000b;text-shadow:0 0 60px #5b6bff}
+#count{position:absolute;inset:0;display:none;place-items:center;font-size:clamp(90px,22vw,240px);font-weight:800;color:#fff;background:#0005;text-shadow:0 0 40px #000,0 0 60px #5b6bff;pointer-events:none}
 #count.on{display:grid}
 #rec{position:absolute;top:14px;right:16px;display:flex;gap:8px;align-items:center;color:#fff;font-weight:700;font-size:14px;background:#0008;padding:6px 12px;border-radius:99px}
 #rec[hidden]{display:none}#rec i{width:10px;height:10px;border-radius:50%;background:#ff3b5c;animation:pulse 1s infinite}
