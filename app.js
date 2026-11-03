@@ -1,5 +1,5 @@
 (() => {
-  const { parseScript, countWords, durationSeconds, formatTime, pixelsPerSecond, clamp, normWord, advance, guessLang } = TPCore;
+  const { parseScript, countWords, durationSeconds, formatTime, pixelsPerSecond, clamp, normWord, advance, guessLang, EMOTIONS, emotionFor } = TPCore;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
@@ -10,6 +10,7 @@
       title: "Téléprompteur", tagline: "Gratuit, privé, fonctionne hors ligne. Rien ne quitte ton navigateur.",
       yourScript: "Ton script", placeholder: "Colle ou écris ton script ici…",
       syntax: "Astuce : une ligne qui commence par // est une note pour toi (affichée en petit, jamais comptée). [pause] ou [sourire] devient un repère coloré.",
+      emotions: "Émotions à jouer (clique pour insérer à l'endroit du curseur)",
       sample: "Exemple", import: "Importer .txt", export: "Exporter", clear: "Effacer", settings: "Réglages",
       speed: "Vitesse de lecture", size: "Taille du texte", width: "Largeur du texte", lh: "Interligne", countdown: "Compte à rebours",
       left: "Gauche", center: "Centre", mirror: "Miroir (pour vitre / beam-splitter)", band: "Ligne de lecture",
@@ -27,6 +28,7 @@
       title: "Teleprompter", tagline: "Free, private, works offline. Nothing leaves your browser.",
       yourScript: "Your script", placeholder: "Paste or write your script here…",
       syntax: "Tip: a line starting with // is a note for you (shown small, never counted). [pause] or [smile] becomes a coloured cue.",
+      emotions: "Emotions to play (click to insert at the cursor)",
       sample: "Sample", import: "Import .txt", export: "Export", clear: "Clear", settings: "Settings",
       speed: "Reading speed", size: "Text size", width: "Text width", lh: "Line spacing", countdown: "Countdown",
       left: "Left", center: "Center", mirror: "Mirror (for glass / beam-splitter rigs)", band: "Reading line",
@@ -42,8 +44,8 @@
     }
   };
   const SAMPLE = {
-    fr: "// Hook : 3 secondes pour accrocher\nTu postules à 100 offres et personne ne répond ?\n\n[pause]\n\nVoici ce que j'ai changé : je ne cherche plus les offres, c'est mon agent qui les trouve avant tout le monde.\n\nResultat : je suis le premier candidat, pas le centième.\n\n// Appel à l'action\nSuis-moi pour la suite, et dis-moi en commentaire quel poste tu vises.",
-    en: "// Hook: 3 seconds to grab them\nYou apply to 100 jobs and nobody replies?\n\n[pause]\n\nHere's what I changed: I stopped hunting for postings, my agent finds them before anyone else.\n\nResult: I'm the first applicant, not the hundredth.\n\n// Call to action\nFollow for part two, and tell me in the comments which role you're after."
+    fr: "// Hook : 3 secondes pour accrocher\n[regard] Tu postules à 100 offres et personne ne répond ?\n\n[pause]\n\n[passion] Voici ce que j'ai changé : je ne cherche plus les offres, c'est mon agent qui les trouve avant tout le monde.\n\n[insiste] Résultat : je suis le premier candidat, pas le centième.\n\n// Appel à l'action\n[sourire] Suis-moi pour la suite, et dis-moi en commentaire quel poste tu vises.",
+    en: "// Hook: 3 seconds to grab them\n[eyes] You apply to 100 jobs and nobody replies?\n\n[pause]\n\n[passion] Here's what I changed: I stopped hunting for postings, my agent finds them before anyone else.\n\n[emphasis] Result: I'm the first applicant, not the hundredth.\n\n// Call to action\n[smile] Follow for part two, and tell me in the comments which role you're after."
   };
 
   let lang = localStorage.getItem("tp.lang") || ((navigator.language || "fr").toLowerCase().startsWith("fr") ? "fr" : "en");
@@ -54,7 +56,20 @@
     $$("[data-i18n-ph]").forEach((e) => (e.placeholder = t(e.dataset.i18nPh)));
     $("#lang").textContent = lang === "fr" ? "EN" : "FR";
     $("#sample").title = "";
-    refreshStats();
+    buildEmoBar(); refreshStats();
+  }
+  function buildEmoBar() {                              // one button per emotion, tag written in the UI language
+    const bar = $("#emo"); bar.textContent = "";
+    for (const e of EMOTIONS) {
+      const tag = e[lang], b = document.createElement("button");
+      b.type = "button"; b.className = "ghost"; b.title = "[" + tag + "]";
+      b.append(e.emoji); const s = document.createElement("small"); s.textContent = tag; b.append(s);
+      b.onclick = () => {
+        const a = scriptEl.selectionStart ?? scriptEl.value.length, z = scriptEl.selectionEnd ?? a, ins = "[" + tag + "] ";
+        scriptEl.setRangeText(ins, a, z, "end"); scriptEl.focus(); refreshStats(); save();
+      };
+      bar.append(b);
+    }
   }
 
   /* ---------- state ---------- */
@@ -109,7 +124,12 @@
       else if (l.type === "note") { p.className = "note"; p.textContent = l.text; }
       else for (const part of l.text.split(/(\[[^\]]*\])/)) {
         if (!part) continue;
-        if (/^\[[^\]]*\]$/.test(part)) { const s = document.createElement("span"); s.className = "cue"; s.textContent = part.slice(1, -1); p.append(s, " "); }
+        if (/^\[[^\]]*\]$/.test(part)) {
+          const s = document.createElement("span"), tag = part.slice(1, -1), emo = emotionFor(tag);
+          s.className = emo ? "cue emo" : "cue";
+          if (emo) { const e = document.createElement("i"); e.textContent = emo.emoji; s.append(e, " " + tag); } else s.textContent = tag;
+          p.append(s, " ");
+        }
         else for (const tok of part.split(/(\s+)/)) {
           if (!tok) continue;
           if (/^\s+$/.test(tok)) { p.append(tok); continue; }
